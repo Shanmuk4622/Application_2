@@ -9,11 +9,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String message = 'No file selected';
+  String fileContent = 'No file selected';
 
   Future<void> pickFile() async {
-    final fileName = await FilePickerService.pickFile();
-    setState(() => message = fileName ?? 'File selection cancelled.');
+    final content = await FilePickerService.pickFile();
+    setState(() => fileContent = content ?? 'File selection cancelled.');
   }
 
   @override
@@ -23,15 +23,20 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: [        
             ElevatedButton(
               onPressed: pickFile,
               child: const Text('Pick Timetable File'),
             ),
             const SizedBox(height: 20),
-            Text(
-              message,
-              style: const TextStyle(fontSize: 18),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  fileContent,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
             ),
           ],
         ),
